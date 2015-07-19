@@ -1,0 +1,25 @@
+{
+    "name": "developeruz/yii-matcher",
+    "description": "Test case like shoulda matchers for Yii 2.x",
+    "keywords": ["yii", "unit test"],
+    "type": "yii2-extension",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Elvira Sheina",
+            "email": "elleuz@gmail.com",
+            "homepage": "http://developer.uz"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "support": {
+        "issues": "https://github.com/developeruz/yii-matcher/issues"
+    },
+    "autoload": {
+        "psr-4": {
+            "developeruz\\yii_matcher\\": ""
+        }
+    }
+}
