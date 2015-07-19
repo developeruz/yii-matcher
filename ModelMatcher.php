@@ -19,25 +19,25 @@ class ModelMatcher extends TestCase {
         $this->class = $class;
     }
 
-    public function mustBeSafe($attribute, $onScenario = Model::SCENARIO_DEFAULT)
+    public function shouldBeSafe($attribute, $onScenario = Model::SCENARIO_DEFAULT)
     {
         $model = $this->getModel($onScenario);
         $this->assertTrue($model->isAttributeSafe($attribute));
     }
 
-    public function mustBeNotSafe($attribute, $onScenario = Model::SCENARIO_DEFAULT)
+    public function shouldBeNotSafe($attribute, $onScenario = Model::SCENARIO_DEFAULT)
     {
         $model = $this->getModel($onScenario);
         $this->assertFalse($model->isAttributeSafe($attribute));
     }
 
-    public function mustBeRequired($attribute, $onScenario = Model::SCENARIO_DEFAULT)
+    public function shouldBeRequired($attribute, $onScenario = Model::SCENARIO_DEFAULT)
     {
         $model = $this->getModel($onScenario);
         $this->assertTrue($model->isAttributeRequired($attribute));
     }
 
-    public function mustBeNotRequired($attribute, $onScenario = Model::SCENARIO_DEFAULT)
+    public function shouldBeNotRequired($attribute, $onScenario = Model::SCENARIO_DEFAULT)
     {
         $model = $this->getModel($onScenario);
         $this->assertFalse($model->isAttributeRequired($attribute));

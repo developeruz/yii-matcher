@@ -20,8 +20,8 @@ class ValidateTest extends TestCase {
     public function testPhoneIsSafeOnlyInRegistration()
     {
          $userModel = new ModelMatcher('app\models\User');
-         $userModel->mustBeSafe('phone', 'registration');
-         $userModel->mustBeNotSafe('phone');
+         $userModel->shouldBeSafe('phone', 'registration');
+         $userModel->shouldBeNotSafe('phone');
     }
     
      public function testUserHasPostsRelation()
@@ -39,8 +39,8 @@ class ValidateTest extends TestCase {
 ```
 ## Доступные методы: ##
 
-- **mustBeSafe()** и **mustBeNotSafe()** - проверка на возможность массового присвоения атрибута 
-- **mustBeRequired()** и **mustBeNotRequired()** - проверка на обязательность заполнения параметра 
+- **shouldBeSafe()** и **shouldBeNotSafe()** - проверка на возможность массового присвоения атрибута 
+- **shouldBeRequired()** и **shouldBeNotRequired()** - проверка на обязательность заполнения параметра 
 - **matchLength()**  - проверка на длинну строки. Для того, чтобы провести проверку только на  *min* или *max*, 
 задайте второй параметр как null.
 - **hasOne()** и **hasMany()**  - проверка на наличие связей 
