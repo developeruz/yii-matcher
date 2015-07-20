@@ -6,10 +6,10 @@ use yii\base\Model;
 use yii\base\Security;
 use yii\codeception\TestCase;
 use yii\console\Exception;
-use yii\validators\Validator;
 
 
-class ModelMatcher extends TestCase {
+class ModelMatcher extends TestCase
+{
 
     public $class;
 
@@ -45,11 +45,10 @@ class ModelMatcher extends TestCase {
 
     public function matchLength($attribute, $min = null, $max = null, $onScenario = Model::SCENARIO_DEFAULT)
     {
-        $stringValidator = $this->getValidator('yii\validators\StringValidator', ['max' => $max, 'min' => $min], $attribute, $onScenario);
+        $stringValidator = $this->getValidator('yii\validators\StringValidator', $attribute, $onScenario);
         $stringGenerator = new Security();
 
-        if(!empty($min))
-        {
+        if (!empty($min)) {
             $string = $stringGenerator->generateRandomString($min - 1);
             $this->assertFalse($stringValidator->validate($string));
 
@@ -57,8 +56,7 @@ class ModelMatcher extends TestCase {
             $this->assertTrue($stringValidator->validate($string));
         }
 
-        if(!empty($max))
-        {
+        if (!empty($max)) {
             $string = $stringGenerator->generateRandomString($max + 1);
             $this->assertFalse($stringValidator->validate($string));
 
@@ -75,8 +73,7 @@ class ModelMatcher extends TestCase {
         $this->assertEquals($relatedClass, $relation->modelClass);
         $this->assertFalse($relation->multiple);
 
-        if(!empty($links))
-        {
+        if (!empty($links)) {
             $actualLinks = $relation->link;
             $this->assertEmpty(array_diff($actualLinks, $links));
         }
@@ -90,8 +87,7 @@ class ModelMatcher extends TestCase {
         $this->assertEquals($relatedClass, $relation->modelClass);
         $this->assertTrue($relation->multiple);
 
-        if(!empty($links))
-        {
+        if (!empty($links)) {
             $actualLinks = $relation->link;
             $this->assertEmpty(array_diff($actualLinks, $links));
         }
@@ -105,13 +101,17 @@ class ModelMatcher extends TestCase {
         return $model;
     }
 
-    private function getValidator($type, $params, $attribute , $onScenario)
+    private function getValidator($type, $attribute, $onScenario)
     {
         $model = $this->getModel($onScenario);
-        $validator = Validator::createValidator($type, $model, $attribute, $params);
-        if(empty($validator))
-        {
-            throw new Exception('Can not generate validator');
+        $validators = $model->getActiveValidators($attribute);
+        foreach ($validators as $v) {
+            if ($v instanceof $type) {
+                return $v;
+            }
+        }
+        if (empty($validator)) {
+            throw new Exception('Not found ' . $type . ' validator for this class');
         }
         return $validator;
     }
